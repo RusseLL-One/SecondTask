@@ -1,0 +1,12 @@
+//
+// Created by russell on 20.09.16.
+//
+
+#ifndef SECONDTASKRECEIVER_MESSAGEADDSPACES_H
+#define SECONDTASKRECEIVER_MESSAGEADDSPACES_H
+
+#define MAX_SLEEP_TIME 5
+
+void *MessageAddSpaces(void *thrStr);
+
+#endif //SECONDTASKRECEIVER_MESSAGEADDSPACES_H

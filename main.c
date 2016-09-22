@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
 
     pthread_create(&threadID, NULL, ReceiveMessage, &sockStr);
     SendMessage(sockStr);
+    return 0;
 }
 
 int SendMessage(socketStr sockStr) {
@@ -36,8 +37,8 @@ int SendMessage(socketStr sockStr) {
     for(int i=0; i<100; i++) {
         srand(time(NULL) + pthread_self());
         length = (rand() % MAXSTRINGSIZE) + 1;
-        for (int i = 0; i < length; i++) {
-            message.payload[i] = 65 + (rand() % 57);
+        for (int j = 0; j < length; i++) {
+            message.payload[j] = 65 + (rand() % 57);
         }
         message.payload[length] = '\0';
         message.id = id;
@@ -52,6 +53,7 @@ int SendMessage(socketStr sockStr) {
 
         sleep((rand() % MAXSLEEPTIME) + 1);
     }
+    return 0;
 }
 
 int CreateSocket(){

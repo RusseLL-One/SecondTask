@@ -1,0 +1,12 @@
+//
+// Created by russell on 20.09.16.
+//
+
+#ifndef SECONDTASKRECEIVER_MESSAGEUPPER_H
+#define SECONDTASKRECEIVER_MESSAGEUPPER_H
+
+#define MAX_SLEEP_TIME 5
+
+void *MessageUpper(void *thrStr);
+
+#endif //SECONDTASKRECEIVER_MESSAGEUPPER_H

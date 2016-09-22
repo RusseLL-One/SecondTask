@@ -4,7 +4,13 @@ libs		=-lpthread
 path		=bin
 obj			=	\
 			$(path)/main.o	\
+			$(path)/MessageAddDashes.o	\
+			$(path)/MessageAddSpaces.o	\
+			$(path)/MessageReverse.o	\
+			$(path)/MessageUpper.o	\
+			$(path)/queue.o	\
 			$(path)/ReceiveMessage.o	\
+			$(path)/SendMessage.o	\
 
 default : check_bin $(path)/secondTask
 
