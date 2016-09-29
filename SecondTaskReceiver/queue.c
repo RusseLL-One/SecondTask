@@ -17,6 +17,10 @@ void init(queueStr *queue) {
     queue->count = 0;
 }
 
+void destroy(queueStr *queue) {
+    free(queue);
+}
+
 int put(queueStr *queue, qMessage elem) {
 
     pthread_mutex_lock(&queue->mutex);

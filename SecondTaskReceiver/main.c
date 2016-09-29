@@ -15,10 +15,9 @@
 #include "MessageUpper.h"
 
 #define IP_ADDR "127.0.0.1"
-#define PORT 32000
+#define RECV_PORT 32000
 
 int CreateSocket();
-struct sockaddr_in CreateAddrStr();
 void PrintStats(socketStr *sockStr);
 
 int main(int argc, char *argv[]) {
@@ -30,11 +29,6 @@ int main(int argc, char *argv[]) {
     init(sockStr.initQueue);
     init(sockStr.finQueue);
     sockStr.sock = CreateSocket();
-    sockStr.addrStr = CreateAddrStr();
-    if (bind(sockStr.sock, (struct sockaddr *) &sockStr.addrStr, sizeof (sockStr.addrStr)) < 0) {
-        fprintf(stderr, "bind() failed\n");
-        return -1;
-    }
 
     pthread_create(&threadID, NULL, ReceiveMessage, &sockStr);
 
@@ -46,35 +40,38 @@ int main(int argc, char *argv[]) {
     pthread_create(&threadID, NULL, SendMessage, &sockStr);
     sleep(60);
     PrintStats(&sockStr);
+    destroy(sockStr.initQueue);
+    destroy(sockStr.finQueue);
     return 0;
 }
 
 int CreateSocket() {
     int sock;
-    int sockPerm;
+    int flag;
+    struct sockaddr_in addrStr;
 
     if ((sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0) {
         fprintf(stderr, "socket() failed\n");
         return -1;
     }
 
-    sockPerm = 1;
-    if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (void *) &sockPerm, sizeof (sockPerm)) < 0) {
+    flag = 1;
+    if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (void *) &flag, sizeof (flag)) < 0) {
         fprintf(stderr, "setsockopt() failed\n");
         return -1;
     }
-    return sock;
-}
-
-struct sockaddr_in CreateAddrStr() {
-    struct sockaddr_in addrStr;
 
     memset(&addrStr, 0, sizeof (addrStr));
     addrStr.sin_family = AF_INET;
     addrStr.sin_addr.s_addr = inet_addr(IP_ADDR);
-    addrStr.sin_port = htons(PORT);
+    addrStr.sin_port = htons(RECV_PORT);
 
-    return addrStr;
+    if (bind(sock, (struct sockaddr *) &addrStr, sizeof (addrStr)) < 0) {
+        fprintf(stderr, "bind() failed\n");
+        return -1;
+    }
+
+    return sock;
 }
 
 void PrintStats(socketStr *sockStr) {

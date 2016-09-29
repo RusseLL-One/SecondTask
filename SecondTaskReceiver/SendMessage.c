@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "socketStruct.h"
 #include "queue.h"
 #include "SendMessage.h"
@@ -19,7 +20,7 @@ void *SendMessage(void *thrStr) {
             continue;
         }
 
-        if (sendto(sharedStr->sock, (void*)sendMessage, sizeof(*sendMessage), 0, (struct sockaddr *) &sharedStr->addrStr, sizeof(sharedStr->addrStr)) != sizeof(*sendMessage)) {
+        if (sendto(sharedStr->sock, (void*)sendMessage, sizeof(*sendMessage), 0, (struct sockaddr *) &sharedStr->sndrAddrStr, sizeof(sharedStr->sndrAddrStr)) != sizeof(*sendMessage)) {
             fprintf(stderr, "SendMessage.c: sendto() failed\n");
             sleep(1);
             continue;

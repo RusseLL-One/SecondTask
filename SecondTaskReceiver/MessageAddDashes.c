@@ -13,7 +13,7 @@
 void *MessageAddDashes(void *thrStr) {
     const int THREAD_ID=4;
     srand(time(NULL) + THREAD_ID);
-    sleep(rand() % MAX_STRING_SIZE);
+    sleep(rand() % MAX_SLEEP_TIME);
     socketStr *queue = (socketStr *) thrStr;
     qMessage *initMessage;
     qMessage finMessage;

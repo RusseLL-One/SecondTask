@@ -3,21 +3,19 @@
 //
 #include <stdio.h>
 #include <sys/socket.h>
-#include <stdlib.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 #include "ReceiveMessage.h"
 #include "structures.h"
 
-
 void *ReceiveMessage(void *thrStr) {
 
     socketStr sharedStr = *(socketStr *) thrStr;
-    socklen_t len = sizeof (sharedStr.addrStr);
+    socklen_t len;
     qMessage message;
 
     for (; ;) {
-        if (recvfrom(sharedStr.sock, &message, 100, 0, (struct sockaddr *) &sharedStr.addrStr, &len) < 0) {
+        if (recvfrom(sharedStr.sock, &message, sizeof(qMessage), 0, (struct sockaddr *) &sharedStr.addrStr, &len) < 0) {
             fprintf(stderr, "ReceiveMessage.c: recvfrom() failed\n");
             sleep(1);
             continue;

@@ -29,6 +29,8 @@ typedef struct { // Mutex для синхронизации очереди
 
 void init(queueStr *queue);
 
+void destroy(queueStr *queue);
+
 int put(queueStr *queue, qMessage elem);
 
 qMessage *get(queueStr *queue, int threadID);

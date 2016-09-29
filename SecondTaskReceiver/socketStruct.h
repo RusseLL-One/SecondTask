@@ -10,7 +10,7 @@
 
 typedef struct {
     int sock;
-    struct sockaddr_in addrStr;
+    struct sockaddr_in sndrAddrStr;
     queueStr *initQueue;
     queueStr *finQueue;
 } socketStr;
